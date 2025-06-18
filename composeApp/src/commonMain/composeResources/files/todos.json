@@ -1,0 +1,602 @@
+[
+  {
+    "id": 1,
+    "text": "Learn Kotlin Multiplatform Basics",
+    "isDone": false,
+    "createdAt": "2024-01-01T10:00:00Z"
+  },
+  {
+    "id": 2,
+    "text": "Set up KMM Project",
+    "isDone": true,
+    "createdAt": "2024-01-02T11:00:00Z"
+  },
+  {
+    "id": 3,
+    "text": "Implement Local Database with Room/SQLDelight",
+    "isDone": false,
+    "createdAt": "2024-01-03T12:00:00Z"
+  },
+  {
+    "id": 4,
+    "text": "Integrate Koin for Dependency Injection",
+    "isDone": false,
+    "createdAt": "2024-01-04T13:00:00Z"
+  },
+  {
+    "id": 5,
+    "text": "Design Todo List UI with Compose Multiplatform",
+    "isDone": false,
+    "createdAt": "2024-01-05T14:00:00Z"
+  },
+  {
+    "id": 6,
+    "text": "Add new Todo item functionality",
+    "isDone": false,
+    "createdAt": "2024-01-06T15:00:00Z"
+  },
+  {
+    "id": 7,
+    "text": "Implement Todo item deletion",
+    "isDone": false,
+    "createdAt": "2024-01-07T16:00:00Z"
+  },
+  {
+    "id": 8,
+    "text": "Add Todo item completion toggle",
+    "isDone": false,
+    "createdAt": "2024-01-08T17:00:00Z"
+  },
+  {
+    "id": 9,
+    "text": "Handle network requests for Todo data",
+    "isDone": false,
+    "createdAt": "2024-01-09T18:00:00Z"
+  },
+  {
+    "id": 10,
+    "text": "Implement error handling for network calls",
+    "isDone": false,
+    "createdAt": "2024-01-10T19:00:00Z"
+  },
+  {
+    "id": 11,
+    "text": "Add loading indicators for async operations",
+    "isDone": false,
+    "createdAt": "2024-01-11T20:00:00Z"
+  },
+  {
+    "id": 12,
+    "text": "Optimize UI performance with LazyColumn",
+    "isDone": false,
+    "createdAt": "2024-01-12T21:00:00Z"
+  },
+  {
+    "id": 13,
+    "text": "Implement data caching strategies",
+    "isDone": false,
+    "createdAt": "2024-01-13T22:00:00Z"
+  },
+  {
+    "id": 14,
+    "text": "Add unit tests for ViewModel",
+    "isDone": false,
+    "createdAt": "2024-01-14T23:00:00Z"
+  },
+  {
+    "id": 15,
+    "text": "Write integration tests for Repository",
+    "isDone": false,
+    "createdAt": "2024-01-15T00:00:00Z"
+  },
+  {
+    "id": 16,
+    "text": "Set up CI/CD pipeline",
+    "isDone": false,
+    "createdAt": "2024-01-16T01:00:00Z"
+  },
+  {
+    "id": 17,
+    "text": "Deploy Android app to Play Store",
+    "isDone": false,
+    "createdAt": "2024-01-17T02:00:00Z"
+  },
+  {
+    "id": 18,
+    "text": "Deploy iOS app to App Store",
+    "isDone": false,
+    "createdAt": "2024-01-18T03:00:00Z"
+  },
+  {
+    "id": 19,
+    "text": "Research MVI architecture",
+    "isDone": false,
+    "createdAt": "2024-01-19T04:00:00Z"
+  },
+  {
+    "id": 20,
+    "text": "Explore Clean Architecture principles",
+    "isDone": false,
+    "createdAt": "2024-01-20T05:00:00Z"
+  },
+  {
+    "id": 21,
+    "text": "Refactor code for better maintainability",
+    "isDone": false,
+    "createdAt": "2024-01-21T06:00:00Z"
+  },
+  {
+    "id": 22,
+    "text": "Add dark mode support",
+    "isDone": false,
+    "createdAt": "2024-01-22T07:00:00Z"
+  },
+  {
+    "id": 23,
+    "text": "Implement user authentication",
+    "isDone": false,
+    "createdAt": "2024-01-23T08:00:00Z"
+  },
+  {
+    "id": 24,
+    "text": "Set up real-time sync with backend",
+    "isDone": false,
+    "createdAt": "2024-01-24T09:00:00Z"
+  },
+  {
+    "id": 25,
+    "text": "Improve accessibility features",
+    "isDone": false,
+    "createdAt": "2024-01-25T10:00:00Z"
+  },
+  {
+    "id": 26,
+    "text": "Write comprehensive documentation",
+    "isDone": false,
+    "createdAt": "2024-01-26T11:00:00Z"
+  },
+  {
+    "id": 27,
+    "text": "Prepare for next feature iteration",
+    "isDone": false,
+    "createdAt": "2024-01-27T12:00:00Z"
+  },
+  {
+    "id": 28,
+    "text": "Review pull requests",
+    "isDone": false,
+    "createdAt": "2024-01-28T13:00:00Z"
+  },
+  {
+    "id": 29,
+    "text": "Participate in daily stand-up",
+    "isDone": false,
+    "createdAt": "2024-01-29T14:00:00Z"
+  },
+  {
+    "id": 30,
+    "text": "Attend team retrospective",
+    "isDone": false,
+    "createdAt": "2024-01-30T15:00:00Z"
+  },
+  {
+    "id": 31,
+    "text": "Fix reported bugs",
+    "isDone": false,
+    "createdAt": "2024-01-31T16:00:00Z"
+  },
+  {
+    "id": 32,
+    "text": "Implement push notifications",
+    "isDone": false,
+    "createdAt": "2024-02-01T17:00:00Z"
+  },
+  {
+    "id": 33,
+    "text": "Add local notifications",
+    "isDone": false,
+    "createdAt": "2024-02-02T18:00:00Z"
+  },
+  {
+    "id": 34,
+    "text": "Create custom animations",
+    "isDone": false,
+    "createdAt": "2024-02-03T19:00:00Z"
+  },
+  {
+    "id": 35,
+    "text": "Integrate third-party SDK",
+    "isDone": false,
+    "createdAt": "2024-02-04T20:00:00Z"
+  },
+  {
+    "id": 36,
+    "text": "Explore database migrations",
+    "isDone": false,
+    "createdAt": "2024-02-05T21:00:00Z"
+  },
+  {
+    "id": 37,
+    "text": "Add analytics tracking",
+    "isDone": false,
+    "createdAt": "2024-02-06T22:00:00Z"
+  },
+  {
+    "id": 38,
+    "text": "Implement deep linking",
+    "isDone": false,
+    "createdAt": "2024-02-07T23:00:00Z"
+  },
+  {
+    "id": 39,
+    "text": "Create onboarding flow",
+    "isDone": false,
+    "createdAt": "2024-02-08T00:00:00Z"
+  },
+  {
+    "id": 40,
+    "text": "Add user feedback mechanism",
+    "isDone": false,
+    "createdAt": "2024-02-09T01:00:00Z"
+  },
+  {
+    "id": 41,
+    "text": "Investigate performance bottlenecks",
+    "isDone": false,
+    "createdAt": "2024-02-10T02:00:00Z"
+  },
+  {
+    "id": 42,
+    "text": "Implement background processing",
+    "isDone": false,
+    "createdAt": "2024-02-11T03:00:00Z"
+  },
+  {
+    "id": 43,
+    "text": "Add offline support",
+    "isDone": false,
+    "createdAt": "2024-02-12T04:00:00Z"
+  },
+  {
+    "id": 44,
+    "text": "Set up A/B testing",
+    "isDone": false,
+    "createdAt": "2024-02-13T05:00:00Z"
+  },
+  {
+    "id": 45,
+    "text": "Explore different UI frameworks",
+    "isDone": false,
+    "createdAt": "2024-02-14T06:00:00Z"
+  },
+  {
+    "id": 46,
+    "text": "Learn about Coroutines structured concurrency",
+    "isDone": false,
+    "createdAt": "2024-02-15T07:00:00Z"
+  },
+  {
+    "id": 47,
+    "text": "Practice state management in Compose",
+    "isDone": false,
+    "createdAt": "2024-02-16T08:00:00Z"
+  },
+  {
+    "id": 48,
+    "text": "Understand Compose recomposition lifecycle",
+    "isDone": false,
+    "createdAt": "2024-02-17T09:00:00Z"
+  },
+  {
+    "id": 49,
+    "text": "Implement custom Modifiers",
+    "isDone": false,
+    "createdAt": "2024-02-18T10:00:00Z"
+  },
+  {
+    "id": 50,
+    "text": "Create reusable Composable functions",
+    "isDone": false,
+    "createdAt": "2024-02-19T11:00:00Z"
+  },
+  {
+    "id": 51,
+    "text": "Read articles on KMM best practices",
+    "isDone": false,
+    "createdAt": "2024-02-20T12:00:00Z"
+  },
+  {
+    "id": 52,
+    "text": "Watch KMM conference talks",
+    "isDone": false,
+    "createdAt": "2024-02-21T13:00:00Z"
+  },
+  {
+    "id": 53,
+    "text": "Contribute to open-source KMM projects",
+    "isDone": false,
+    "createdAt": "2024-02-22T14:00:00Z"
+  },
+  {
+    "id": 54,
+    "text": "Mentor junior developers",
+    "isDone": false,
+    "createdAt": "2024-02-23T15:00:00Z"
+  },
+  {
+    "id": 55,
+    "text": "Write technical blog posts",
+    "isDone": false,
+    "createdAt": "2024-02-24T16:00:00Z"
+  },
+  {
+    "id": 56,
+    "text": "Prepare for job interviews",
+    "isDone": false,
+    "createdAt": "2024-02-25T17:00:00Z"
+  },
+  {
+    "id": 57,
+    "text": "Update resume and portfolio",
+    "isDone": false,
+    "createdAt": "2024-02-26T18:00:00Z"
+  },
+  {
+    "id": 58,
+    "text": "Network with other developers",
+    "isDone": false,
+    "createdAt": "2024-02-27T19:00:00Z"
+  },
+  {
+    "id": 59,
+    "text": "Explore new programming languages",
+    "isDone": false,
+    "createdAt": "2024-02-28T20:00:00Z"
+  },
+  {
+    "id": 60,
+    "text": "Read books on software architecture",
+    "isDone": false,
+    "createdAt": "2024-02-29T21:00:00Z"
+  },
+  {
+    "id": 61,
+    "text": "Attend local meetups",
+    "isDone": false,
+    "createdAt": "2024-03-01T22:00:00Z"
+  },
+  {
+    "id": 62,
+    "text": "Participate in coding challenges",
+    "isDone": false,
+    "createdAt": "2024-03-02T23:00:00Z"
+  },
+  {
+    "id": 63,
+    "text": "Learn about cloud platforms (AWS, GCP, Azure)",
+    "isDone": false,
+    "createdAt": "2024-03-03T00:00:00Z"
+  },
+  {
+    "id": 64,
+    "text": "Understand DevOps practices",
+    "isDone": false,
+    "createdAt": "2024-03-04T01:00:00Z"
+  },
+  {
+    "id": 65,
+    "text": "Explore Docker and Kubernetes",
+    "isDone": false,
+    "createdAt": "2024-03-05T02:00:00Z"
+  },
+  {
+    "id": 66,
+    "text": "Set up a personal server",
+    "isDone": false,
+    "createdAt": "2024-03-06T03:00:00Z"
+  },
+  {
+    "id": 67,
+    "text": "Build a simple backend API",
+    "isDone": false,
+    "createdAt": "2024-03-07T04:00:00Z"
+  },
+  {
+    "id": 68,
+    "text": "Learn about databases (SQL, NoSQL)",
+    "isDone": false,
+    "createdAt": "2024-03-08T05:00:00Z"
+  },
+  {
+    "id": 69,
+    "text": "Understand message queues",
+    "isDone": false,
+    "createdAt": "2024-03-09T06:00:00Z"
+  },
+  {
+    "id": 70,
+    "text": "Explore caching mechanisms",
+    "isDone": false,
+    "createdAt": "2024-03-10T07:00:00Z"
+  },
+  {
+    "id": 71,
+    "text": "Learn about security best practices",
+    "isDone": false,
+    "createdAt": "2024-03-11T08:00:00Z"
+  },
+  {
+    "id": 72,
+    "text": "Conduct code reviews",
+    "isDone": false,
+    "createdAt": "2024-03-12T09:00:00Z"
+  },
+  {
+    "id": 73,
+    "text": "Give technical presentations",
+    "isDone": false,
+    "createdAt": "2024-03-13T10:00:00Z"
+  },
+  {
+    "id": 74,
+    "text": "Contribute to tech forums",
+    "isDone": false,
+    "createdAt": "2024-03-14T11:00:00Z"
+  },
+  {
+    "id": 75,
+    "text": "Stay updated with latest tech trends",
+    "isDone": false,
+    "createdAt": "2024-03-15T12:00:00Z"
+  },
+  {
+    "id": 76,
+    "text": "Balance work and personal life",
+    "isDone": false,
+    "createdAt": "2024-03-16T13:00:00Z"
+  },
+  {
+    "id": 77,
+    "text": "Learn new foreign language",
+    "isDone": false,
+    "createdAt": "2024-03-17T14:00:00Z"
+  },
+  {
+    "id": 78,
+    "text": "Explore creative hobbies",
+    "isDone": false,
+    "createdAt": "2024-03-18T15:00:00Z"
+  },
+  {
+    "id": 79,
+    "text": "Spend time with family and friends",
+    "isDone": false,
+    "createdAt": "2024-03-19T16:00:00Z"
+  },
+  {
+    "id": 80,
+    "text": "Travel to new places",
+    "isDone": false,
+    "createdAt": "2024-03-20T17:00:00Z"
+  },
+  {
+    "id": 81,
+    "text": "Exercise regularly",
+    "isDone": false,
+    "createdAt": "2024-03-21T18:00:00Z"
+  },
+  {
+    "id": 82,
+    "text": "Eat healthy food",
+    "isDone": false,
+    "createdAt": "2024-03-22T19:00:00Z"
+  },
+  {
+    "id": 83,
+    "text": "Get enough sleep",
+    "isDone": false,
+    "createdAt": "2024-03-23T20:00:00Z"
+  },
+  {
+    "id": 84,
+    "text": "Read books for leisure",
+    "isDone": false,
+    "createdAt": "2024-03-24T21:00:00Z"
+  },
+  {
+    "id": 85,
+    "text": "Listen to music",
+    "isDone": false,
+    "createdAt": "2024-03-25T22:00:00Z"
+  },
+  {
+    "id": 86,
+    "text": "Practice mindfulness",
+    "isDone": false,
+    "createdAt": "2024-03-26T23:00:00Z"
+  },
+  {
+    "id": 87,
+    "text": "Learn new recipes",
+    "isDone": false,
+    "createdAt": "2024-03-27T00:00:00Z"
+  },
+  {
+    "id": 88,
+    "text": "Do gardening",
+    "isDone": false,
+    "createdAt": "2024-03-28T01:00:00Z"
+  },
+  {
+    "id": 89,
+    "text": "Play board games",
+    "isDone": false,
+    "createdAt": "2024-03-29T02:00:00Z"
+  },
+  {
+    "id": 90,
+    "text": "Watch movies/TV series",
+    "isDone": false,
+    "createdAt": "2024-03-30T03:00:00Z"
+  },
+  {
+    "id": 91,
+    "text": "Attend concerts/festivals",
+    "isDone": false,
+    "createdAt": "2024-03-31T04:00:00Z"
+  },
+  {
+    "id": 92,
+    "text": "Go for a hike",
+    "isDone": false,
+    "createdAt": "2024-04-01T05:00:00Z"
+  },
+  {
+    "id": 93,
+    "text": "Visit museums/art galleries",
+    "isDone": false,
+    "createdAt": "2024-04-02T06:00:00Z"
+  },
+  {
+    "id": 94,
+    "text": "Volunteer for a cause",
+    "isDone": false,
+    "createdAt": "2024-04-03T07:00:00Z"
+  },
+  {
+    "id": 95,
+    "text": "Learn a musical instrument",
+    "isDone": false,
+    "createdAt": "2024-04-04T08:00:00Z"
+  },
+  {
+    "id": 96,
+    "text": "Practice photography",
+    "isDone": false,
+    "createdAt": "2024-04-05T09:00:00Z"
+  },
+  {
+    "id": 97,
+    "text": "Start a new project",
+    "isDone": false,
+    "createdAt": "2024-04-06T10:00:00Z"
+  },
+  {
+    "id": 98,
+    "text": "Organize digital files",
+    "isDone": false,
+    "createdAt": "2024-04-07T11:00:00Z"
+  },
+  {
+    "id": 99,
+    "text": "Clean up workspace",
+    "isDone": false,
+    "createdAt": "2024-04-08T12:00:00Z"
+  },
+  {
+    "id": 100,
+    "text": "Review goals for the month",
+    "isDone": false,
+    "createdAt": "2024-04-09T13:00:00Z"
+  }
+]

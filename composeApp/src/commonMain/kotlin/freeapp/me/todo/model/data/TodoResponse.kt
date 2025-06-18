@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class TodoResponse(
     @SerialName("todos")
-    val feed: List<Todo>,
+    val todos: List<Todo>,
     @SerialName("totalPages")
     val totalPages: Int,
     @SerialName("currentPage")
