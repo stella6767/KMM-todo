@@ -13,8 +13,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import freeapp.me.todo.model.data.Todo
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 
+@Preview
 @Composable
 fun TodoItemRow(todo: Todo, onToggle: () -> Unit, onDelete: () -> Unit) {
     Row(
