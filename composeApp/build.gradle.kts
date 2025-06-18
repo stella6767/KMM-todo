@@ -1,3 +1,4 @@
+import com.android.build.api.dsl.androidLibrary
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
@@ -7,14 +8,13 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.room)
 
     kotlin("plugin.serialization") version "2.1.21"
-
 }
 
 kotlin {
-
-    val ktorVersion = "3.1.3"
 
     androidTarget {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
@@ -37,7 +37,10 @@ kotlin {
     sourceSets {
 
         androidMain.dependencies {
-            implementation("io.ktor:ktor-client-android:${ktorVersion}")
+            implementation(libs.ktor.client.okhttp)
+            implementation(libs.androidx.room.paging)
+
+
             implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
             implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.2")
             implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
@@ -47,18 +50,25 @@ kotlin {
             implementation(libs.androidx.activity.compose)
         }
         iosMain.dependencies {
-            implementation("io.ktor:ktor-client-darwin:$ktorVersion")
+
+            implementation(libs.ktor.client.darwin)
+
         }
 
         commonMain.dependencies {
             implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.2")
             implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
+            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3") // JSON 직렬화
 
-            implementation("io.ktor:ktor-client-core:${ktorVersion}")
-            implementation("io.ktor:ktor-client-content-negotiation:${ktorVersion}")
-            implementation("io.ktor:ktor-serialization-kotlinx-json:${ktorVersion}")
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.serialization.kotlinx.json)
+
+            implementation(libs.androidx.room.runtime)
+            implementation(libs.androidx.sqlite.bundled)
 
 
+            implementation(compose.materialIconsExtended) // 또는 compose.materialIconsCore
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
@@ -103,5 +113,12 @@ android {
 
 dependencies {
     debugImplementation(compose.uiTooling)
+    add("kspAndroid", libs.androidx.room.compiler)
+    add("kspIosSimulatorArm64", libs.androidx.room.compiler)
+    add("kspIosX64", libs.androidx.room.compiler)
+    add("kspIosArm64", libs.androidx.room.compiler)
 }
 
+room {
+    schemaDirectory("$projectDir/schemas")
+}

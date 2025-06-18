@@ -1,47 +1,17 @@
 package freeapp.me.todo
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeContentPadding
-import androidx.compose.material3.Button
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.jetbrains.compose.resources.painterResource
+
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import freeapp.me.todo.config.LocalTodoViewModel
+import freeapp.me.todo.view.screen.TodoAppScreen
 import org.jetbrains.compose.ui.tooling.preview.Preview
-
-
-import todo.composeapp.generated.resources.Res
-import todo.composeapp.generated.resources.compose_multiplatform
 
 @Composable
 @Preview
-fun App(mainViewModel: MainViewModel = MainViewModel()) {
+fun App() {
 
-    MaterialTheme {
-
-        val greetings by mainViewModel.greetingList.collectAsStateWithLifecycle()
-        Column(
-            modifier = Modifier
-                .safeContentPadding()
-                .fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            greetings.forEach { greeting ->
-                Text(greeting)
-                HorizontalDivider()
-            }
-        }
+    CompositionLocalProvider(LocalTodoViewModel provides LocalTodoViewModel.current) {
+        TodoAppScreen()
     }
 }
