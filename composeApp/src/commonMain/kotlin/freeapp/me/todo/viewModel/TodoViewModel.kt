@@ -1,5 +1,6 @@
 package freeapp.me.todo.viewModel
 
+import androidx.lifecycle.ViewModel
 import freeapp.me.todo.model.data.Todo
 import freeapp.me.todo.model.repository.TodoRepository
 import kotlinx.coroutines.CoroutineScope
@@ -12,11 +13,10 @@ import kotlinx.coroutines.launch
 class TodoViewModel(
     private val todoRepository: TodoRepository,
     private val coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.Main) // UI 스레드에서 작업
-) {
+) : ViewModel() {
 
     // UI에 노출할 Todo 리스트 상태
-    private val _todos
-    = MutableStateFlow<List<Todo>>(emptyList())
+    private val _todos = MutableStateFlow<List<Todo>>(emptyList())
     val todos: StateFlow<List<Todo>> = _todos.asStateFlow() // 읽기 전용으로 노출
 
     // 새 Todo 입력 필드의 텍스트 상태

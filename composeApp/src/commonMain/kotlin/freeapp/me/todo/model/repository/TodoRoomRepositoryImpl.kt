@@ -1,6 +1,6 @@
 package freeapp.me.todo.model.repository
 
-import freeapp.me.todo.config.AppDatabase
+import freeapp.me.todo.config.db.AppDatabase
 import freeapp.me.todo.model.data.Todo
 import kotlinx.coroutines.flow.Flow
 

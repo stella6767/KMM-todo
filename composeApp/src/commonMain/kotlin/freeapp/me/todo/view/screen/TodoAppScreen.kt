@@ -11,18 +11,19 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import freeapp.me.todo.config.LocalTodoViewModel
 import freeapp.me.todo.view.component.TodoItemRow
+import freeapp.me.todo.viewModel.TodoViewModel
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.viewmodel.koinViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
+@Preview
 @Composable
-fun TodoAppScreen() {
+fun TodoAppScreen(
+    viewModel: TodoViewModel = koinViewModel<TodoViewModel>(),
+) {
     // ViewModel의 StateFlow를 Compose 상태로 변환하여 UI 업데이트에 사용
-
-
-    val viewModel = LocalTodoViewModel.current
-
 
     val todos by viewModel.todos.collectAsState()
     val newTodoText by viewModel.newTodoText.collectAsState()

@@ -1,4 +1,4 @@
-package freeapp.me.todo.config
+package freeapp.me.todo.config.db
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -11,10 +11,10 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface TodoDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.Companion.REPLACE)
     suspend fun insert(todo: Todo)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.Companion.REPLACE)
     suspend fun insert(todos: List<Todo>)
 
     @Query("SELECT * FROM Todo")

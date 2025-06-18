@@ -39,7 +39,8 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.ktor.client.okhttp)
             implementation(libs.androidx.room.paging)
-
+            implementation(libs.koin.android)
+            implementation(libs.koin.androidx.compose)
 
             implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
             implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.2")
@@ -66,6 +67,10 @@ kotlin {
 
             implementation(libs.androidx.room.runtime)
             implementation(libs.androidx.sqlite.bundled)
+
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
 
 
             implementation(compose.materialIconsExtended) // 또는 compose.materialIconsCore
