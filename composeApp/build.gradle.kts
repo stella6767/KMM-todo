@@ -67,6 +67,9 @@ kotlin {
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
 
+            implementation(libs.okio)
+
+
 
             implementation(compose.materialIconsExtended) // 또는 compose.materialIconsCore
             implementation(compose.runtime)

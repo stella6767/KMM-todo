@@ -37,8 +37,8 @@ fun TodoAppScreen(
     // ViewModel의 StateFlow를 Compose 상태로 변환하여 UI 업데이트에 사용
     val todos by viewModel.allTodos.collectAsState()
     val newTodoText by viewModel.newTodoText.collectAsState()
-    val isLoading by viewModel.isLoading.collectAsState() // ⭐️ 로딩 상태 관찰 ⭐️
-    val hasMorePages by viewModel.hasMorePages.collectAsState() // ⭐️ 더 로드할 페이지 있는지 관찰 ⭐️
+    val isLoading by viewModel.isLoading.collectAsState()
+    val hasMorePages by viewModel.hasMorePages.collectAsState()
     val listState = rememberLazyListState()
 
 

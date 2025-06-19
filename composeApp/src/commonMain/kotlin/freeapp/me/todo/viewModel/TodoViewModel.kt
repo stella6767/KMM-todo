@@ -1,9 +1,9 @@
 package freeapp.me.todo.viewModel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import freeapp.me.todo.model.data.PageImpl
 import freeapp.me.todo.model.data.Todo
-import freeapp.me.todo.model.data.TodoResponse
 import freeapp.me.todo.model.repository.TodoRepository
 import freeapp.me.todo.util.Logger
 import kotlinx.coroutines.CoroutineScope
@@ -19,7 +19,6 @@ import kotlinx.coroutines.launch
 
 class TodoViewModel(
     private val todoRepository: TodoRepository,
-    private val coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.Main) // UI 스레드에서 작업
 ) : ViewModel() {
 
     private val PAGE_SIZE = 20
@@ -43,7 +42,7 @@ class TodoViewModel(
 
     init {
         // ⭐️ loadTodos() 호출 대신 Flow 연결 로직을 init 블록에 직접 넣습니다. ⭐️
-        coroutineScope.launch {
+        viewModelScope.launch {
             _requestPage.flatMapLatest { page ->
                     _isLoading.value = true
                     Logger.d("LOG_TAG", "Requesting page: $page")
@@ -83,7 +82,7 @@ class TodoViewModel(
      * 입력 필드가 비어있지 않은 경우에만 저장합니다.
      */
     fun addTodo() {
-        coroutineScope.launch {
+        viewModelScope.launch {
             val currentText = _newTodoText.value.trim() // 입력 텍스트 양쪽 공백 제거
             if (currentText.isNotBlank()) { // 텍스트가 비어있지 않은지 확인
                 // 새로운 Todo 객체를 생성합니다. ID는 간단하게 현재 타임스탬프를 사용합니다.
@@ -91,9 +90,12 @@ class TodoViewModel(
                 todoRepository.insertTodo(newTodo) // Repository를 통해 Todo를 저장합니다.
                 _newTodoText.value = "" // Todo 추가 후 입력 필드를 초기화합니다.
 
-                _allTodos.value = emptyList() // 기존 목록 비우기
-                _requestPage.value = 1 // 첫 페이지부터 다시 로드 트리거
-                _hasMorePages.value = true // 다시 로드 가능하게
+//                _allTodos.value = emptyList() // 기존 목록 비우기
+//                _requestPage.value = 1 // 첫 페이지부터 다시 로드 트리거
+//                _hasMorePages.value = true // 다시 로드 가능하게
+
+                Logger.i("test", "insert todo!! ")
+                _allTodos.value += newTodo
 
             }
         }
@@ -113,7 +115,7 @@ class TodoViewModel(
      * @param id 토글할 Todo의 고유 ID
      */
     fun toggleTodoStatus(id: Long) {
-        coroutineScope.launch {
+        viewModelScope.launch {
             todoRepository.toggleTodoStatus(id)
         }
     }
@@ -123,7 +125,7 @@ class TodoViewModel(
      * @param id 삭제할 Todo의 고유 ID
      */
     fun deleteTodo(id: Long) {
-        coroutineScope.launch {
+        viewModelScope.launch {
             todoRepository.deleteTodoById(id)
         }
     }
@@ -132,7 +134,7 @@ class TodoViewModel(
      * 모든 Todo를 삭제합니다.
      */
     fun clearAllTodos() {
-        coroutineScope.launch {
+        viewModelScope.launch {
             todoRepository.deleteAllTodos()
         }
     }
