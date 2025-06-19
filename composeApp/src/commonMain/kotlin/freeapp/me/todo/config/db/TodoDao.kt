@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 interface TodoDao {
 
     @Insert(onConflict = OnConflictStrategy.Companion.REPLACE)
-    suspend fun insert(todo: Todo)
+    suspend fun insert(todo: Todo) : Long
 
     @Insert(onConflict = OnConflictStrategy.Companion.REPLACE)
     suspend fun insert(todos: List<Todo>)
@@ -21,7 +21,7 @@ interface TodoDao {
     fun getAllAsFlow(): Flow<List<Todo>>
 
     @Query("SELECT * FROM Todo ORDER BY createdAt DESC LIMIT :limit OFFSET :offset")
-    fun getTodosPaginated(limit: Int, offset: Int): Flow<List<Todo>> // Flow로 반환하여 변경 감지
+    suspend fun getTodosPaginated(limit: Int, offset: Int): List<Todo>
 
 
     @Query("SELECT COUNT(*) as count FROM Todo")

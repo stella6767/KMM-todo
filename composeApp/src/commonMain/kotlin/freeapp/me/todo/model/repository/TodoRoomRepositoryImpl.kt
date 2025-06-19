@@ -15,41 +15,29 @@ class TodoRoomRepositoryImpl(
 
     val todoDao = database.todoDao()
 
-    override fun getTodosPaginated(
-        currentPage: Int,
-        pageSize: Int
-    ): Flow<PageImpl<List<Todo>>> {
-        val offset = (currentPage - 1) * pageSize
-        val paginatedTodosFlow =
-            todoDao.getTodosPaginated(pageSize, offset) // 페이지 데이터 Flow
-        // 전체 Todo 개수를 가져오는 Flow (suspend 함수를 Flow로 감싸야 함)
-        val totalCountFlow = flow {
-            emit(todoDao.count().toLong())
-        }
-        // 두 Flow를 combine하여 TodoResponse를 만듭니다.
-        return paginatedTodosFlow.combine(totalCountFlow) { todos, totalCount ->
-            val totalPages = (totalCount + pageSize - 1) / pageSize // 총 페이지 수 계산
-            val isLastPage = currentPage >= totalPages // 마지막 페이지인지 여부
-            PageImpl(
-                page = currentPage.toLong(),
-                pageSize = pageSize,
-                totalCount = totalCount,
-                isLast = isLastPage,
-                data = todos
-            )
-        }
-    }
 
     override fun getTodos(): Flow<List<Todo>> {
         return todoDao.getAllAsFlow()
+    }
+
+    override suspend fun getTodosPaginated(
+        currentPage: Int,
+        pageSize: Int
+    ): List<Todo> {
+        val offset = (currentPage - 1) * pageSize
+
+        return todoDao.getTodosPaginated(pageSize, offset) // 페이지 데이터 Flow
     }
 
     override suspend fun getTodoById(id: Long): Todo? {
         return todoDao.getById(id)
     }
 
-    override suspend fun insertTodo(todo: Todo) {
-        todoDao.insert(todo)
+    override suspend fun insertTodo(todo: Todo): Todo {
+        return database.withTransaction {
+            val insertedId = todoDao.insert(todo)
+            getTodoById(insertedId) ?: throw NoSuchElementException("Todo with ID $insertedId not found.")
+        }
     }
 
     override suspend fun deleteTodoById(id: Long): Boolean {
@@ -59,13 +47,17 @@ class TodoRoomRepositoryImpl(
 
     override suspend fun toggleTodoStatus(id: Long): Todo {
 
-        val todo = getTodoById(id)
-        if (todo != null) {
-            val updatedTodo = todo.copy(isDone = !todo.isDone)
-            todoDao.insert(updatedTodo) // REPLACE 전략이므로 업데이트 역할을 합니다.
-            return updatedTodo
+        return database.withTransaction {
+            val todo = getTodoById(id)
+            if (todo != null) {
+                val updatedTodo = todo.copy(isDone = !todo.isDone)
+                todoDao.insert(updatedTodo) // REPLACE 전략이므로 업데이트 역할을 합니다.
+                updatedTodo
+            } else {
+                throw NoSuchElementException("Todo with ID $id not found.")
+            }
         }
-        throw NoSuchElementException("Todo with ID $id not found.")
+
     }
 
     override suspend fun deleteAllTodos() {

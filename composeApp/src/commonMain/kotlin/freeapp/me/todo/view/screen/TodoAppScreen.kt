@@ -2,6 +2,7 @@ package freeapp.me.todo.view.screen
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
@@ -35,10 +36,9 @@ fun TodoAppScreen(
     //todo loaing 상태표시와 transaction readme 작성
 
     // ViewModel의 StateFlow를 Compose 상태로 변환하여 UI 업데이트에 사용
-    val todos by viewModel.allTodos.collectAsState()
+    val todoState by viewModel.uiState.collectAsState()
     val newTodoText by viewModel.newTodoText.collectAsState()
-    val isLoading by viewModel.isLoading.collectAsState()
-    val hasMorePages by viewModel.hasMorePages.collectAsState()
+
     val listState = rememberLazyListState()
 
 
@@ -49,9 +49,9 @@ fun TodoAppScreen(
         snapshotFlow { listState.layoutInfo.visibleItemsInfo.lastOrNull()?.index } // 마지막 보이는 아이템 인덱스
             .map { it == (listState.layoutInfo.totalItemsCount - 1) } // 마지막 아이템이 보이는지 여부
             .distinctUntilChanged() // 중복 호출 방지
-            .filter { it && !isLoading && hasMorePages } // 마지막 아이템이 보이고, 로딩 중이 아니고, 더 로드할 페이지가 있으면
+            .filter { it && !todoState.isLoading && !todoState.isLast } // 마지막 아이템이 보이고, 로딩 중이 아니고, 더 로드할 페이지가 있으면
             .collect {
-                viewModel.loadNextPage() // 다음 페이지 로드 요청
+                viewModel.loadMoreTodos() // 다음 페이지 로드 요청
             }
     }
 
@@ -101,44 +101,55 @@ fun TodoAppScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Todo 리스트 섹션
-            if (todos.isEmpty() && !isLoading && !hasMorePages) {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text("No todos yet! Add one above.")
-                }
-            } else {
-                LazyColumn(
-                    state = listState,
-                    modifier = Modifier.fillMaxWidth().weight(1f), // 남은 공간 차지
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    items(todos.size) { index ->
-                        val todo = todos[index]
-                        TodoItemRow(
-                            todo = todo,
-                            onToggle = { viewModel.toggleTodoStatus(todo.id) },
-                            onDelete = { viewModel.deleteTodo(todo.id) }
-                        )
+            when {
+                todoState.isLoading && todoState.todos.isEmpty() -> {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text("No todos yet! Add one above.")
                     }
+                }
 
+                todoState.error != null -> {
+                    // 에러 상태
+                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        Text("Error: ${todoState.error}", color = MaterialTheme.colorScheme.error)
+                    }
+                }
 
-                    if (isLoading && hasMorePages) {
-                        item {
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(16.dp),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                CircularProgressIndicator()
+                else -> {
+                    // Todo 리스트 섹션
+                    LazyColumn(
+                        state = listState,
+                        modifier = Modifier.fillMaxWidth().weight(1f), // 남은 공간 차지
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        itemsIndexed(todoState.todos) { index, todo ->
+                            TodoItemRow(
+                                todo = todo,
+                                onToggle = { viewModel.toggleTodoStatus(todo.id) },
+                                onDelete = { viewModel.deleteTodo(todo.id) }
+                            )
+
+                            // 마지막 항목이고 로딩 중이면 로딩 인디케이터 표시
+                            if (index == todoState.todos.lastIndex && todoState.isLoading) {
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(16.dp),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    CircularProgressIndicator()
+                                }
                             }
                         }
+
                     }
 
                 }
+
+
             }
         }
     }
