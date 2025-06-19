@@ -16,7 +16,7 @@ interface TodoRepository {
 
     suspend fun deleteTodoById(id: Long): Boolean
 
-    suspend fun toggleTodoStatus(id: Long)
+    suspend fun toggleTodoStatus(id: Long) : Todo
 
     suspend fun deleteAllTodos()
 }

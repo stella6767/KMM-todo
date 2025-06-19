@@ -8,11 +8,16 @@ import androidx.room.TypeConverters
 import freeapp.me.todo.config.db.TodoDao
 import freeapp.me.todo.model.data.Todo
 
+
 @Database(entities = [Todo::class], version = 1)
 @TypeConverters(InstantConverter::class)
 @ConstructedBy(AppDatabaseConstructor::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun todoDao(): TodoDao
+
+    suspend fun performTransaction(todoDao: TodoDao, newTodos: List<Todo>) {
+
+    }
 
     companion object {
         const val DB_FILE_NAME = "todo.db"

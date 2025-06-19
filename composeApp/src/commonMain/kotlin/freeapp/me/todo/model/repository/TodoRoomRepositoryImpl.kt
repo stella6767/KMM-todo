@@ -3,6 +3,8 @@ package freeapp.me.todo.model.repository
 import freeapp.me.todo.config.db.AppDatabase
 import freeapp.me.todo.model.data.PageImpl
 import freeapp.me.todo.model.data.Todo
+import freeapp.me.todo.util.Logger
+import freeapp.me.todo.util.withTransaction
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
@@ -55,12 +57,15 @@ class TodoRoomRepositoryImpl(
         return deleteById !== 0
     }
 
-    override suspend fun toggleTodoStatus(id: Long) {
+    override suspend fun toggleTodoStatus(id: Long): Todo {
+
         val todo = getTodoById(id)
         if (todo != null) {
             val updatedTodo = todo.copy(isDone = !todo.isDone)
             todoDao.insert(updatedTodo) // REPLACE 전략이므로 업데이트 역할을 합니다.
+            return updatedTodo
         }
+        throw NoSuchElementException("Todo with ID $id not found.")
     }
 
     override suspend fun deleteAllTodos() {

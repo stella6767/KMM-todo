@@ -111,6 +111,7 @@ fun TodoAppScreen(
                 }
             } else {
                 LazyColumn(
+                    state = listState,
                     modifier = Modifier.fillMaxWidth().weight(1f), // 남은 공간 차지
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {

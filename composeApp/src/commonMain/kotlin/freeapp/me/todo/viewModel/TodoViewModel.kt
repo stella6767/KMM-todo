@@ -8,13 +8,17 @@ import freeapp.me.todo.model.repository.TodoRepository
 import freeapp.me.todo.util.Logger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.scan
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class TodoViewModel(
@@ -28,7 +32,6 @@ class TodoViewModel(
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
 
-
     private val _hasMorePages = MutableStateFlow(true)
     val hasMorePages: StateFlow<Boolean> = _hasMorePages.asStateFlow()
 
@@ -40,41 +43,67 @@ class TodoViewModel(
     private val _newTodoText = MutableStateFlow("")
     val newTodoText: StateFlow<String> = _newTodoText.asStateFlow()
 
+    private val _refreshTrigger = MutableSharedFlow<Unit>(replay = 1) // 데이터 새로고침 트리거
+
+
     init {
-        // ⭐️ loadTodos() 호출 대신 Flow 연결 로직을 init 블록에 직접 넣습니다. ⭐️
         viewModelScope.launch {
-            _requestPage.flatMapLatest { page ->
+            loadTodos()
+        }
+    }
+
+
+    private suspend fun loadTodos() {
+
+        _refreshTrigger
+            .onStart { emit(Unit) } // ViewModel 초기화 시 첫 로드를 위해 트리거 한 번 발생
+            .flatMapLatest { // 트리거 발생 시 _requestPage 스트림을 재시작
+                // _requestPage Flow가 변경될 때마다 실제 페이지 로드 Flow를 생성
+                _requestPage.flatMapLatest { page ->
                     _isLoading.value = true
-                    Logger.d("LOG_TAG", "Requesting page: $page")
+                    Logger.d("loadTodos", "Requesting page: $page")
                     todoRepository.getTodosPaginated(page, PAGE_SIZE)
                 }
-                .scan(PageImpl(0, 0, 0, false, emptyList<Todo>())) { acc, newPageImpl ->
-                    if (newPageImpl.page == 1L) {
-                        newPageImpl
-                    } else {
-                        newPageImpl.copy(data = acc.data + newPageImpl.data)
-                    }
-                }.collectLatest { accumulatedPageImpl -> // ⭐️ collectLatest 사용 ⭐️
-                    _allTodos.value = accumulatedPageImpl.data
-                    _hasMorePages.value = !accumulatedPageImpl.isLast
-                    Logger.d("LOG_TAG", "Accumulated todos: ${accumulatedPageImpl.data.size}, IsLast: ${accumulatedPageImpl.isLast}, TotalPages: ${accumulatedPageImpl.totalPage}, CurrentPage: ${accumulatedPageImpl.page}")
-
-                    _isLoading.value = false
+            }.scan(PageImpl(1, 0, 0, false, emptyList<Todo>())) { acc, newPageImpl ->
+                if (newPageImpl.page == 1L) {
+                    newPageImpl
+                } else {
+                    newPageImpl.copy(data = acc.data + newPageImpl.data)
                 }
+            }.collectLatest { accumulatedPageImpl ->
+                _allTodos.value = accumulatedPageImpl.data
+                _hasMorePages.value = !accumulatedPageImpl.isLast
+                Logger.d(
+                    "loadTodos",
+                    "Accumulated todos: ${accumulatedPageImpl.data.size}, IsLast: ${accumulatedPageImpl.isLast}, TotalPages: ${accumulatedPageImpl.totalPage}, CurrentPage: ${accumulatedPageImpl.page}"
+                )
+                _isLoading.value = false
+            }
+    }
+
+
+    private fun refreshData() {
+        viewModelScope.launch {
+            _requestPage.value = 1
+            _allTodos.value = emptyList()
+            _hasMorePages.value = true
+            _refreshTrigger.emit(Unit)
+            Logger.d("refreshData", "Data refresh triggered.")
         }
-        loadNextPage() // 초기 데이터 로드 시작
     }
 
 
     fun loadNextPage() {
         if (_isLoading.value || !_hasMorePages.value) {
-            Logger.d("LOG_TAG", "Not loading next page. Is Loading: ${_isLoading.value}, Has More: ${_hasMorePages.value}")
+            Logger.d(
+                "loadNextPage",
+                "Not loading next page. Is Loading: ${_isLoading.value}, Has More: ${_hasMorePages.value}"
+            )
             return
         }
         _requestPage.value = _requestPage.value + 1
-        Logger.d("LOG_TAG", "Triggered next page load: ${_requestPage.value}")
+        Logger.d("loadNextPage", "Triggered next page load: ${_requestPage.value}")
     }
-
 
 
     /**
@@ -89,14 +118,8 @@ class TodoViewModel(
                 val newTodo = Todo(text = currentText)
                 todoRepository.insertTodo(newTodo) // Repository를 통해 Todo를 저장합니다.
                 _newTodoText.value = "" // Todo 추가 후 입력 필드를 초기화합니다.
-
-//                _allTodos.value = emptyList() // 기존 목록 비우기
-//                _requestPage.value = 1 // 첫 페이지부터 다시 로드 트리거
-//                _hasMorePages.value = true // 다시 로드 가능하게
-
+                refreshData()
                 Logger.i("test", "insert todo!! ")
-                _allTodos.value += newTodo
-
             }
         }
     }
@@ -109,14 +132,21 @@ class TodoViewModel(
     }
 
 
-
     /**
      * 특정 Todo의 완료 상태를 토글합니다.
      * @param id 토글할 Todo의 고유 ID
      */
     fun toggleTodoStatus(id: Long) {
         viewModelScope.launch {
-            todoRepository.toggleTodoStatus(id)
+            //DB 업데이트
+            val updatedTodo =
+                todoRepository.toggleTodoStatus(id)
+            //UI 동기화
+            _allTodos.update { currentTodos ->
+                currentTodos.map { todo ->
+                    if (todo.id == updatedTodo.id) updatedTodo else todo
+                }
+            }
         }
     }
 
