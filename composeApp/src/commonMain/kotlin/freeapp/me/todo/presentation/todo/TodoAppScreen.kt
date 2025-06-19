@@ -32,7 +32,7 @@ fun TodoAppScreen(
 ) {
 
 
-    //todo loaing 상태표시와 transaction readme 작성 navgation ,ios build test, 설정키, app 출시 로고,
+    //todo readme 작성 navgation ,ios build test, 설정키, app 출시 로고,
 
     // ViewModel의 StateFlow를 Compose 상태로 변환하여 UI 업데이트에 사용
     val todoState by viewModel.uiState.collectAsState()

@@ -22,6 +22,9 @@ import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
+import org.koin.core.module.dsl.bind
+import org.koin.core.module.dsl.singleOf
+import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.module // Koin 모듈 DSL을 위한 import
 
@@ -34,6 +37,7 @@ val appModule = module {
     single { Json { ignoreUnknownKeys = true; isLenient = true; prettyPrint = true } }
     single { HttpClientFactory.create(get()) }
 
+
     single<AppDatabase> {
         val database = get<DatabaseFactory>().create()
             .setDriver(BundledSQLiteDriver())
@@ -42,6 +46,8 @@ val appModule = module {
         CoroutineScope(Dispatchers.IO).launch {
             val todoDao = database.todoDao()
             val currentTodoCount = todoDao.count()
+
+            Logger.i("App", "currentTodoCount: $currentTodoCount")
 
             if (currentTodoCount == 0) { // DB가 비어있을 경우에만 초기 데이터 삽입
 
@@ -57,21 +63,18 @@ val appModule = module {
         database
     }
 
-    //single<TodoRepository> { TodoRoomRepositoryImpl(get()) }
+
 
     val baseUrl = if (getPlatform().name.contains("Android")) "http://10.0.2.2:8080"
     else "http://localhost:8080"
 
-    single<TodoRepository> { TodoNetworkRepositoryImpl(get(), baseUrl) }
+    //single<TodoRepository> { TodoNetworkRepositoryImpl(get(), baseUrl) }
+    //single<TodoRepository> { TodoRoomRepositoryImpl(get()) }
+
+    singleOf(::TodoRoomRepositoryImpl) { bind<TodoRepository>() }
+    viewModelOf(::TodoViewModel)
 
     // factory: 요청될 때마다 새로운 인스턴스를 제공합니다. (ViewModel에 적합)
-    factory { TodoViewModel(get()) } // get()은 Koin 컨테이너에서 TodoRepository 인스턴스를 찾아 주입합니다.
+    //factory { TodoViewModel(get()) } // get()은 Koin 컨테이너에서 TodoRepository 인스턴스를 찾아 주입합니다.
 }
 
-// Koin을 초기화하는 함수
-fun initKoin(config: KoinAppDeclaration? = null) {
-    startKoin {
-        config?.invoke(this)
-        modules(appModule, platformModule) // 공통 모듈과 플랫폼별 모듈을 함께 로드합니다.
-    }
-}

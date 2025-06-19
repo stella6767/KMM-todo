@@ -39,9 +39,8 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.ktor.client.okhttp)
             implementation(libs.androidx.room.paging)
-            implementation(libs.koin.android)
-            implementation(libs.koin.androidx.compose)
 
+            implementation(libs.androidx.compose.ui.tooling.preview)
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
         }
@@ -67,10 +66,12 @@ kotlin {
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
+            implementation(libs.koin.compose.viewmodel.navigation)
 
             implementation(libs.okio)
 
 
+            implementation("org.jetbrains.androidx.navigation:navigation-compose:2.9.0-beta03")
 
             implementation(compose.materialIconsExtended) // 또는 compose.materialIconsCore
             implementation(compose.runtime)
