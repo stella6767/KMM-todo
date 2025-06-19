@@ -1,7 +1,9 @@
 # TodoApp
 
 Kotlin Multiplatform Mobile (KMM)을 활용하여 Android와 iOS 플랫폼에서 동작하는 간단한 할 일(Todo) 관리 애플리케이션입니다. 
-UI까지 코드로 공유되는지 테스트확인완료
+MVVM 아키텍처 + UI까지 코드로 공유되는지 테스트확인 
+
+![img.png](img.png)
 
 ---
 
