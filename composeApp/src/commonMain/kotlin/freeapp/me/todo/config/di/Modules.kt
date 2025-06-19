@@ -12,6 +12,8 @@ import freeapp.me.todo.data.repository.TodoRoomRepositoryImpl
 import freeapp.me.todo.util.Logger
 import freeapp.me.todo.util.readResourceFile
 import freeapp.me.todo.presentation.todo.TodoViewModel
+import freeapp.me.todo.util.Platform
+import freeapp.me.todo.util.getPlatform
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -56,7 +58,11 @@ val appModule = module {
     }
 
     //single<TodoRepository> { TodoRoomRepositoryImpl(get()) }
-    single<TodoRepository> { TodoNetworkRepositoryImpl(get()) }
+
+    val baseUrl = if (getPlatform().name.contains("Android")) "http://10.0.2.2:8080"
+    else "http://localhost:8080"
+
+    single<TodoRepository> { TodoNetworkRepositoryImpl(get(), baseUrl) }
 
     // factory: 요청될 때마다 새로운 인스턴스를 제공합니다. (ViewModel에 적합)
     factory { TodoViewModel(get()) } // get()은 Koin 컨테이너에서 TodoRepository 인스턴스를 찾아 주입합니다.

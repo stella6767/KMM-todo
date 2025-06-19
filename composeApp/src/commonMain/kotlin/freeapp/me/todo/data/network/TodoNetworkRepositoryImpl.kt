@@ -19,9 +19,10 @@ import kotlinx.coroutines.flow.Flow
 
 class TodoNetworkRepositoryImpl(
     private val httpClient: HttpClient,
+    private val baseUrl:String,
 ) : TodoRepository {
 
-    private val baseUrl = "http://localhost:8080"
+
 
     override suspend fun getTodos(): Flow<List<Todo>> {
         throw NotImplementedError("Not implemented yet")
@@ -66,7 +67,7 @@ class TodoNetworkRepositoryImpl(
 
     override suspend fun toggleTodoStatus(id: Long): Todo {
         val body =
-            httpClient.put("$baseUrl/todo/$id").body<NetworkResponse<Todo>>()
+            httpClient.put("$baseUrl/v2/todo/$id").body<NetworkResponse<Todo>>()
         return body.data
     }
 
