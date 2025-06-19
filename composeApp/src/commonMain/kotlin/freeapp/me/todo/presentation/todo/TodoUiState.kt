@@ -1,6 +1,6 @@
-package freeapp.me.todo.viewModel
+package freeapp.me.todo.presentation.todo
 
-import freeapp.me.todo.model.data.Todo
+import freeapp.me.todo.domain.model.Todo
 
 data class TodoUiState(
     val todos: List<Todo> = emptyList(),

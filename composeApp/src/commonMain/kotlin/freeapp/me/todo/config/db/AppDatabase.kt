@@ -5,8 +5,8 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.RoomDatabaseConstructor
 import androidx.room.TypeConverters
-import freeapp.me.todo.config.db.TodoDao
-import freeapp.me.todo.model.data.Todo
+import freeapp.me.todo.data.repository.TodoDao
+import freeapp.me.todo.domain.model.Todo
 
 
 @Database(entities = [Todo::class], version = 1)

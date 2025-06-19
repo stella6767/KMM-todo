@@ -1,4 +1,4 @@
-package freeapp.me.todo.model.data
+package freeapp.me.todo.data.dto
 
 data class PageImpl<T>(
     val page: Long,

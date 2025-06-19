@@ -1,4 +1,4 @@
-package freeapp.me.todo.view.screen
+package freeapp.me.todo.presentation.todo
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -16,8 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import freeapp.me.todo.util.Logger
-import freeapp.me.todo.view.component.TodoItemRow
-import freeapp.me.todo.viewModel.TodoViewModel
+import freeapp.me.todo.presentation.todo.component.TodoItemRow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
@@ -33,7 +32,7 @@ fun TodoAppScreen(
 ) {
 
 
-    //todo loaing 상태표시와 transaction readme 작성
+    //todo loaing 상태표시와 transaction readme 작성 navgation ,ios build test, 설정키, app 출시 로고,
 
     // ViewModel의 StateFlow를 Compose 상태로 변환하여 UI 업데이트에 사용
     val todoState by viewModel.uiState.collectAsState()

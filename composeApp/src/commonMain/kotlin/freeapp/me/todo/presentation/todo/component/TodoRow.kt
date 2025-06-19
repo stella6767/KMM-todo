@@ -1,4 +1,4 @@
-package freeapp.me.todo.view.component
+package freeapp.me.todo.presentation.todo.component
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import freeapp.me.todo.model.data.Todo
+import freeapp.me.todo.domain.model.Todo
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 

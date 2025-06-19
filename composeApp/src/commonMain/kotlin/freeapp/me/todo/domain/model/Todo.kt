@@ -1,11 +1,10 @@
-package freeapp.me.todo.model.data
+package freeapp.me.todo.domain.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
-
 
 @Serializable
 @Entity
@@ -15,5 +14,10 @@ data class Todo(
     val isDone: Boolean = false,
     val createdAt: Instant = Clock.System.now() // 생성 시각 (kotlinx-datetime 사용)
 ) {
+
+    fun toSaveDto(){
+
+
+    }
 
 }

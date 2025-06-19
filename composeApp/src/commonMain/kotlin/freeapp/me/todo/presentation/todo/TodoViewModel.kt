@@ -1,9 +1,9 @@
-package freeapp.me.todo.viewModel
+package freeapp.me.todo.presentation.todo
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import freeapp.me.todo.model.data.Todo
-import freeapp.me.todo.model.repository.TodoRepository
+import freeapp.me.todo.domain.model.Todo
+import freeapp.me.todo.domain.repository.TodoRepository
 import freeapp.me.todo.util.Logger
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

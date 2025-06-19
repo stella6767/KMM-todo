@@ -1,13 +1,10 @@
-package freeapp.me.todo.model.repository
+package freeapp.me.todo.data.repository
 
 import freeapp.me.todo.config.db.AppDatabase
-import freeapp.me.todo.model.data.PageImpl
-import freeapp.me.todo.model.data.Todo
-import freeapp.me.todo.util.Logger
+import freeapp.me.todo.domain.model.Todo
+import freeapp.me.todo.domain.repository.TodoRepository
 import freeapp.me.todo.util.withTransaction
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flow
 
 class TodoRoomRepositoryImpl(
     private val database: AppDatabase,
@@ -16,7 +13,8 @@ class TodoRoomRepositoryImpl(
     val todoDao = database.todoDao()
 
 
-    override fun getTodos(): Flow<List<Todo>> {
+    override suspend fun getTodos(): Flow<List<Todo>> {
+
         return todoDao.getAllAsFlow()
     }
 

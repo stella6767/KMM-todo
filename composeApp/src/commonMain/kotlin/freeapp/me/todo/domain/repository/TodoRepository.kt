@@ -1,12 +1,11 @@
-package freeapp.me.todo.model.repository
+package freeapp.me.todo.domain.repository
 
-import freeapp.me.todo.model.data.PageImpl
-import freeapp.me.todo.model.data.Todo
+import freeapp.me.todo.domain.model.Todo
 import kotlinx.coroutines.flow.Flow
 
 interface TodoRepository {
 
-    fun getTodos(): Flow<List<Todo>>
+    suspend fun getTodos(): Flow<List<Todo>>
 
     suspend fun getTodosPaginated(currentPage: Int, pageSize: Int):  List<Todo>
 

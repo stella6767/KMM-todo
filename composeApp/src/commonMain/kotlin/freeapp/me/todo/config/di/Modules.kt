@@ -3,14 +3,15 @@ package freeapp.me.todo.config.di
 
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import freeapp.me.todo.config.db.AppDatabase
-import freeapp.me.todo.config.db.AppDatabaseConstructor
 import freeapp.me.todo.config.db.DatabaseFactory
-import freeapp.me.todo.model.data.Todo
-import freeapp.me.todo.model.repository.TodoRepository
-import freeapp.me.todo.model.repository.TodoRoomRepositoryImpl
+import freeapp.me.todo.config.network.HttpClientFactory
+import freeapp.me.todo.data.network.TodoNetworkRepositoryImpl
+import freeapp.me.todo.domain.model.Todo
+import freeapp.me.todo.domain.repository.TodoRepository
+import freeapp.me.todo.data.repository.TodoRoomRepositoryImpl
 import freeapp.me.todo.util.Logger
 import freeapp.me.todo.util.readResourceFile
-import freeapp.me.todo.viewModel.TodoViewModel
+import freeapp.me.todo.presentation.todo.TodoViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -19,10 +20,8 @@ import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
-import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.module // Koin 모듈 DSL을 위한 import
-import todo.composeapp.generated.resources.Res
 
 // 플랫폼별로 제공될 모듈을 위한 expect/actual 정의 (예: Context를 받는 AppDatabase)
 expect val platformModule: Module
@@ -31,6 +30,7 @@ expect val platformModule: Module
 val appModule = module {
     // single: 싱글톤 객체를 제공합니다. (앱 전체에서 하나의 인스턴스만 존재)
     single { Json { ignoreUnknownKeys = true; isLenient = true; prettyPrint = true } }
+    single { HttpClientFactory.create(get()) }
 
     single<AppDatabase> {
         val database = get<DatabaseFactory>().create()
@@ -55,7 +55,9 @@ val appModule = module {
         database
     }
 
-    single<TodoRepository> { TodoRoomRepositoryImpl(get()) }
+    //single<TodoRepository> { TodoRoomRepositoryImpl(get()) }
+    single<TodoRepository> { TodoNetworkRepositoryImpl(get()) }
+
     // factory: 요청될 때마다 새로운 인스턴스를 제공합니다. (ViewModel에 적합)
     factory { TodoViewModel(get()) } // get()은 Koin 컨테이너에서 TodoRepository 인스턴스를 찾아 주입합니다.
 }

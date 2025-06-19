@@ -1,11 +1,11 @@
-package freeapp.me.todo.config.db
+package freeapp.me.todo.data.repository
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.MapColumn
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import freeapp.me.todo.model.data.Todo
+import freeapp.me.todo.domain.model.Todo
 import kotlinx.coroutines.flow.Flow
 
 @Dao
