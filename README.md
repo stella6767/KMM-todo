@@ -30,6 +30,9 @@ https://github.com/android/kotlin-multiplatform-samples
 https://speakerdeck.com/dsa28s/kmp-gaebaleul-wihan-aladumyeon-joheun-raibeureori-sogae-di-peureimweokeu-jjigmeoghagi
 https://www.jetbrains.com/help/kotlin-multiplatform-dev/multiplatform-share-on-platforms.html
 https://github.com/InsertKoinIO/koin/issues/2175
+https://stackoverflow.com/questions/3997748/how-can-i-create-a-keystore
+https://dev.to/kingori/2025nyeone-andeuroideu-aebeul-mandeulgi-50df
+
 
 []()
 []()
